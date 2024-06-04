@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v6.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v6.0": {
+      "eSya.ManagePharmacy.IF/1.0.0": {
+        "dependencies": {
+          "eSya.ManagePharmacy.DO": "1.0.0"
+        },
+        "runtime": {
+          "eSya.ManagePharmacy.IF.dll": {}
+        }
+      },
+      "eSya.ManagePharmacy.DO/1.0.0": {
+        "runtime": {
+          "eSya.ManagePharmacy.DO.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "eSya.ManagePharmacy.IF/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "eSya.ManagePharmacy.DO/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}

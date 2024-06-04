@@ -1,0 +1,58 @@
+{
+  "Version": 1,
+  "Hash": "D8MS2hQkT//OXW7fGmm1n+RTbmWIxyHKQ+B4AAWBGtE=",
+  "Source": "eSya.ManagePharmacy.WebAPI",
+  "BasePath": "_content/eSya.ManagePharmacy.WebAPI",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [
+    {
+      "Name": "eSya.ManagePharmacy.WebAPI\\wwwroot",
+      "Source": "eSya.ManagePharmacy.WebAPI",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\wwwroot\\",
+      "BasePath": "_content/eSya.ManagePharmacy.WebAPI",
+      "Pattern": "**"
+    }
+  ],
+  "Assets": [
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\wwwroot\\Resources\\ar-EG.json",
+      "SourceId": "eSya.ManagePharmacy.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\wwwroot\\",
+      "BasePath": "_content/eSya.ManagePharmacy.WebAPI",
+      "RelativePath": "Resources/ar-EG.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Resources\\ar-EG.json"
+    },
+    {
+      "Identity": "D:\\Projects\\eSyaProjects2022\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\wwwroot\\Resources\\en-US.json",
+      "SourceId": "eSya.ManagePharmacy.WebAPI",
+      "SourceType": "Discovered",
+      "ContentRoot": "D:\\Projects\\eSyaProjects2022\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\eSya.ManagePharmacy.WebAPI\\wwwroot\\",
+      "BasePath": "_content/eSya.ManagePharmacy.WebAPI",
+      "RelativePath": "Resources/en-US.json",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "AssetMergeBehavior": "PreferTarget",
+      "AssetMergeSource": "",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\Resources\\en-US.json"
+    }
+  ]
+}

@@ -1,0 +1,11 @@
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\bin\Debug\net6.0\eSya.ManagePharmacy.DO.deps.json
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\bin\Debug\net6.0\eSya.ManagePharmacy.DO.dll
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\bin\Debug\net6.0\eSya.ManagePharmacy.DO.pdb
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\eSya.ManagePharmacy.DO.GeneratedMSBuildEditorConfig.editorconfig
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\eSya.ManagePharmacy.DO.AssemblyInfoInputs.cache
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\eSya.ManagePharmacy.DO.AssemblyInfo.cs
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\eSya.ManagePharmacy.DO.csproj.CoreCompileInputs.cache
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\eSya.ManagePharmacy.DO.dll
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\refint\eSya.ManagePharmacy.DO.dll
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\eSya.ManagePharmacy.DO.pdb
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DO\eSya.ManagePharmacy.DO\obj\Debug\net6.0\ref\eSya.ManagePharmacy.DO.dll
