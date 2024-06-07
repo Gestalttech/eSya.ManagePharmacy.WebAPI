@@ -2,8 +2,8 @@ using eSya.ManagePharmacy.WebAPI.Utility;
 using eSya.ManagePharmacy.WebAPI.Filters;
 using Microsoft.Extensions.Configuration;
 using DL_ManagePharmacy = eSya.ManagePharmacy.DL.Entities;
-//using eSya.ManagePharmacy.IF;
-//using eSya.ManagePharmacy.DL.Repository;
+using eSya.ManagePharmacy.IF;
+using eSya.ManagePharmacy.DL.Repository;
 using System.Globalization;
 using eSya.ConfigSKU.DL.Localization;
 using Microsoft.Extensions.Localization;
@@ -24,6 +24,7 @@ builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add<HttpAuthAttribute>();
 });
+
 builder.Services.AddControllersWithViews(options =>
 {
     options.Filters.Add<CultureAuthAttribute>();
@@ -45,15 +46,16 @@ builder.Services.Configure<RequestLocalizationOptions>(options =>
 });
 
 builder.Services.AddLocalization();
-//localization
-
+//localizatibu
+builder.Services.AddSingleton<ICommonRepository,CommonRepository>();
+builder.Services.AddSingleton<IDrugBrandsRepository, DrugBrandsRepository>();
 
 builder.Services.AddSingleton<IStringLocalizerFactory, JsonStringLocalizerFactory>();
-
 
 builder.Services.AddControllers();
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
+
 
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
@@ -68,6 +70,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 
+//app.UseAuthorization();
+
 //Localization
 
 var supportedCultures = new[] { /*"en-IN", */ "en-US", "ar-EG" };
@@ -78,7 +82,7 @@ var localizationOptions = new RequestLocalizationOptions()
 app.UseRequestLocalization(localizationOptions);
 //Localization
 
-//app.UseAuthorization();
+
 
 app.MapControllers();
 //app.MapControllerRoute(
@@ -86,3 +90,4 @@ app.MapControllers();
 //    pattern: "{controller=values}/{action=Get}/{id?}");
 
 app.Run();
+
