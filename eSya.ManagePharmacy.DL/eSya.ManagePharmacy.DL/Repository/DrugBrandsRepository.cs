@@ -40,7 +40,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
-        public async Task<List<DO_DrugBrands>> GetDrugBrandList(int CompositionID, int FormulationID, int ManufacturerID)
+        public async Task<List<DO_DrugBrands>> GetDrugBrandListByGroup(int CompositionID, int FormulationID, int ManufacturerID)
         {
             try
             {
@@ -129,7 +129,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
-        public async Task<List<DO_DrugBrands>> GetDrugBrandList(int TradeID)
+        public async Task<List<DO_DrugBrands>> GetDrugBrandListByTradeID(int TradeID)
         {
             try
             {

@@ -33,9 +33,9 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         /// UI Reffered - Drug Brands
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> GetDrugBrandList(int TradeID)
+        public async Task<IActionResult> GetDrugBrandListByTradeID(int TradeID)
         {
-            var i_Codes = await _drugBrandRepository.GetDrugBrandList(TradeID);
+            var i_Codes = await _drugBrandRepository.GetDrugBrandListByTradeID(TradeID);
             return Ok(i_Codes);
         }
 
@@ -44,9 +44,9 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         /// UI Reffered - Drug Brands
         /// </summary>
         [HttpGet]
-        public async Task<IActionResult> GetDrugBrandList(int CompositionID, int FormulationID, int ManufacturerID)
+        public async Task<IActionResult> GetDrugBrandListByGroup(int CompositionID, int FormulationID, int ManufacturerID)
         {
-            var i_Codes = await _drugBrandRepository.GetDrugBrandList(CompositionID, FormulationID, ManufacturerID);
+            var i_Codes = await _drugBrandRepository.GetDrugBrandListByGroup(CompositionID, FormulationID, ManufacturerID);
             return Ok(i_Codes);
         }
 
