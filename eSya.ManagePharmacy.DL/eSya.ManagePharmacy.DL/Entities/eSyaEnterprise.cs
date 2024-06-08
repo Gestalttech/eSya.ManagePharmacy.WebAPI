@@ -17,6 +17,7 @@ namespace eSya.ManagePharmacy.DL.Entities
         {
         }
 
+        public virtual DbSet<GtEcapcd> GtEcapcds { get; set; } = null!;
         public virtual DbSet<GtEphdbl> GtEphdbls { get; set; } = null!;
         public virtual DbSet<GtEphdco> GtEphdcos { get; set; } = null!;
         public virtual DbSet<GtEphdcp> GtEphdcps { get; set; } = null!;
@@ -42,6 +43,33 @@ namespace eSya.ManagePharmacy.DL.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<GtEcapcd>(entity =>
+            {
+                entity.HasKey(e => e.ApplicationCode)
+                    .HasName("PK_GT_ECAPCD_1");
+
+                entity.ToTable("GT_ECAPCD");
+
+                entity.Property(e => e.ApplicationCode).ValueGeneratedNever();
+
+                entity.Property(e => e.CodeDesc).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ShortCode).HasMaxLength(15);
+            });
+
             modelBuilder.Entity<GtEphdbl>(entity =>
             {
                 entity.HasKey(e => new { e.BusinessKey, e.TradeId, e.StoreCode });

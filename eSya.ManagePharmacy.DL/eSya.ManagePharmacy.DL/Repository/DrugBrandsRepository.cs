@@ -52,6 +52,8 @@ namespace eSya.ManagePharmacy.DL.Repository
                         (x, y) => new { x, y })
                         .Select(r => new DO_DrugBrands
                         {
+                            Skutype = r.y.Skutype,
+                            Skucode = r.y.Skucode,
                             Skuid = r.y.Skuid,
                             CompositionID = r.x.CompositionId,
                             FormulationID = r.x.FormulationId,
@@ -62,10 +64,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                             ManufacturerID = r.x.ManufacturerId,
                             ISDCode = r.x.Isdcode,
                             BarcodeID = r.x.BarcodeId,
-                            ActiveStatus = r.x.ActiveStatus,
-                            Skutype = r.y.Skutype,
-                            Skucode = r.y.Skucode
-
+                            ActiveStatus = r.x.ActiveStatus
                         }).ToListAsync();
                     //foreach (var obj in result)
                     //{

@@ -18,6 +18,16 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         //}
 
         /// <summary>
+        /// Getting  Application Codes.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetApplicationCodesByCodeType(int codeType)
+        {
+            var ds = await _commonRepository.GetApplicationCodesByCodeType(codeType);
+            return Ok(ds);
+        }
+
+        /// <summary>
         /// Getting  Composition
         /// </summary>
         [HttpGet]
