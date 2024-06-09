@@ -11,6 +11,7 @@ namespace eSya.ManagePharmacy.IF
     {
         #region Drug Brands
         Task<List<DO_DrugBrands>> GetDrugBrandList();
+        Task<List<DO_DrugBrands>> GetFullDrugBrandList();
         Task<List<DO_DrugBrands>> GetDrugBrandListByGroup(int CompositionID, int FormulationID, int ManufacturerID);
         Task<List<DO_DrugBrands>> GetDrugBrandListByTradeID(int TradeID);
         Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands drugBrands);

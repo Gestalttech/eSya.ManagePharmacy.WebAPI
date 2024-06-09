@@ -18,6 +18,7 @@ namespace eSya.ManagePharmacy.DL.Entities
         }
 
         public virtual DbSet<GtEcapcd> GtEcapcds { get; set; } = null!;
+        public virtual DbSet<GtEccncd> GtEccncds { get; set; } = null!;
         public virtual DbSet<GtEphdbl> GtEphdbls { get; set; } = null!;
         public virtual DbSet<GtEphdco> GtEphdcos { get; set; } = null!;
         public virtual DbSet<GtEphdcp> GtEphdcps { get; set; } = null!;
@@ -68,6 +69,66 @@ namespace eSya.ManagePharmacy.DL.Entities
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
 
                 entity.Property(e => e.ShortCode).HasMaxLength(15);
+            });
+
+            modelBuilder.Entity<GtEccncd>(entity =>
+            {
+                entity.HasKey(e => e.Isdcode);
+
+                entity.ToTable("GT_ECCNCD");
+
+                entity.Property(e => e.Isdcode)
+                    .ValueGeneratedNever()
+                    .HasColumnName("ISDCode");
+
+                entity.Property(e => e.CountryCode)
+                    .HasMaxLength(4)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.CountryFlag).HasMaxLength(150);
+
+                entity.Property(e => e.CountryName).HasMaxLength(50);
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.CurrencyCode).HasMaxLength(4);
+
+                entity.Property(e => e.DateFormat)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.IsPinapplicable).HasColumnName("IsPINApplicable");
+
+                entity.Property(e => e.IsPoboxApplicable).HasColumnName("IsPOBoxApplicable");
+
+                entity.Property(e => e.MobileNumberPattern)
+                    .HasMaxLength(25)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.PincodePattern)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("PINcodePattern");
+
+                entity.Property(e => e.PoboxPattern)
+                    .HasMaxLength(25)
+                    .IsUnicode(false)
+                    .HasColumnName("POBoxPattern");
+
+                entity.Property(e => e.ShortDateFormat)
+                    .HasMaxLength(15)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<GtEphdbl>(entity =>

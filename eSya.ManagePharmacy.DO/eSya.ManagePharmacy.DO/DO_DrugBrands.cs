@@ -25,5 +25,17 @@ namespace eSya.ManagePharmacy.DO
         public int UserID { get; set; }
         public DateTime CreatedOn { get; set; }
         public string TerminalID { get; set; }
+
+        public List<DO_eSyaParameter> l_FormParameter { get; set; }
+    }
+
+    public class DO_eSyaParameter
+    {
+        public int ParameterID { get; set; }
+        public bool ParmAction { get; set; }
+        public decimal ParmValue { get; set; }
+        public decimal ParmPerct { get; set; }
+        public string? ParmDesc { get; set; }
+        public bool ActiveStatus { get; set; }
     }
 }

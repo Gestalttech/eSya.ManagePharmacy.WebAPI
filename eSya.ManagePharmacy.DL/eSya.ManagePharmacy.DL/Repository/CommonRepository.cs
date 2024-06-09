@@ -116,5 +116,28 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
+
+        public async Task<List<DO_CountryCodes>> GetISDCodes()
+        {
+            try
+            {
+                using (var db = new eSyaEnterprise())
+                {
+                    var ds = db.GtEccncds
+                        .Where(w => w.ActiveStatus)
+                        .Select(r => new DO_CountryCodes
+                        {
+                            Isdcode = r.Isdcode,
+                            CountryName = r.CountryName
+                        }).ToListAsync();
+
+                    return await ds;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
     }
 }

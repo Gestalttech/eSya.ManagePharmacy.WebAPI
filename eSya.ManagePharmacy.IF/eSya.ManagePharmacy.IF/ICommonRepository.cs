@@ -13,6 +13,6 @@ namespace eSya.ManagePharmacy.IF
         Task<List<DO_DrugComposition>> GetComposition(); 
         Task<List<DO_DrugComposition>> GetDrugFormulation(int CompositionId); 
         Task<List<DO_DrugComposition>> GetManufacturers(int CompositionId, int FormulationID);
-
+        Task<List<DO_CountryCodes>> GetISDCodes();
     }
 }
