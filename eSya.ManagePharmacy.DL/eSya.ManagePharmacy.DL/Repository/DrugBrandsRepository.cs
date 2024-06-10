@@ -49,81 +49,34 @@ namespace eSya.ManagePharmacy.DL.Repository
                 {
 
 
-                    var result = await db.GtEphmdbs.Join(db.GtEskucds.Where(q => q.Skutype == "D"),
-                         x => x.TradeId,
+                    var result = await db.GtEphmdbs
+                        .Join(db.GtEcapcds,
+                       a => a.Packing,
+                       p => p.ApplicationCode,
+                       (a, p) => new { a, p })
+                        .Join(db.GtEskucds.Where(q => q.Skutype == "D"),
+                         x => x.a.TradeId,
                          y => y.Skucode,
                          (x, y) => new { x, y })
                          .Select(r => new DO_DrugBrands
                          {
                              Skuid = r.y.Skuid,
-                             CompositionID = r.x.CompositionId,
-                             FormulationID = r.x.FormulationId,
-                             TradeID = r.x.TradeId,
-                             TradeName = r.x.TradeName,
-                             PackSize = r.x.PackSize,
-                             Packing = r.x.Packing,
-                             ManufacturerID = r.x.ManufacturerId,
-                             ISDCode = r.x.Isdcode,
-                             BarcodeID = r.x.BarcodeId,
-                             ActiveStatus = r.x.ActiveStatus,
+                             CompositionID = r.x.a.CompositionId,
+                             FormulationID = r.x.a.FormulationId,
+                             TradeID = r.x.a.TradeId,
+                             TradeName = r.x.a.TradeName,
+                             PackSize = r.x.a.PackSize,
+                             Packing = r.x.a.Packing,
+                             PackingDesc = r.x.p.CodeDesc,
+                             ManufacturerID = r.x.a.ManufacturerId,
+                             ISDCode = r.x.a.Isdcode,
+                             BarcodeID = r.x.a.BarcodeId,
+                             ActiveStatus = r.x.a.ActiveStatus,
                              Skutype = r.y.Skutype,
                              Skucode = r.y.Skucode
 
                          }).ToListAsync();
-                    //foreach (var obj in result)
-                    //{
-                    //    if (obj.InventoryClass == "S")
-                    //    {
-                    //        obj.InventoryClass = "Stockable";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.InventoryClass = "Non-Stockable";
-                    //    }
-
-                    //    if (obj.ItemClass == "B")
-                    //    {
-                    //        obj.ItemClass = "Bought Out";
-                    //    }
-                    //    else if (obj.ItemClass == "C")
-                    //    {
-                    //        obj.ItemClass = "Consignment";
-                    //    }
-                    //    else if (obj.ItemClass == "I")
-                    //    {
-                    //        obj.ItemClass = "In-House";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemClass = "Sub Contract";
-                    //    }
-
-                    //    if (obj.ItemSource == "L")
-                    //    {
-                    //        obj.ItemSource = "Local";
-                    //    }
-                    //    else if (obj.ItemSource == "I")
-                    //    {
-                    //        obj.ItemSource = "Imported";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemSource = "Out Station";
-                    //    }
-
-                    //    if (obj.ItemCriticality == "D")
-                    //    {
-                    //        obj.ItemCriticality = "Desirable";
-                    //    }
-                    //    else if (obj.ItemCriticality == "E")
-                    //    {
-                    //        obj.ItemCriticality = "Essential";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemCriticality = "Vital";
-                    //    }
-                    //}
+                    
                     return result;
                 }
             }
@@ -140,80 +93,32 @@ namespace eSya.ManagePharmacy.DL.Repository
                 using (var db = new eSyaEnterprise())
                 {
                     var result = await db.GtEphmdbs.Where(w => w.CompositionId == CompositionID && w.FormulationId == FormulationID && w.ManufacturerId == ManufacturerID)
+                        .Join(db.GtEcapcds,
+                       a => a.Packing,
+                       p => p.ApplicationCode,
+                       (a, p) => new { a, p })
                         .Join(db.GtEskucds.Where(q => q.Skutype == "D"),
-                        x => x.TradeId,
+                        x => x.a.TradeId,
                         y => y.Skucode,
                         (x, y) => new { x, y })
                         .Select(r => new DO_DrugBrands
                         {
-                            Skutype = r.y.Skutype,
-                            Skucode = r.y.Skucode,
                             Skuid = r.y.Skuid,
-                            CompositionID = r.x.CompositionId,
-                            FormulationID = r.x.FormulationId,
-                            TradeID = r.x.TradeId,
-                            TradeName = r.x.TradeName,
-                            PackSize = r.x.PackSize,
-                            Packing = r.x.Packing,
-                            ManufacturerID = r.x.ManufacturerId,
-                            ISDCode = r.x.Isdcode,
-                            BarcodeID = r.x.BarcodeId,
-                            ActiveStatus = r.x.ActiveStatus
+                            CompositionID = r.x.a.CompositionId,
+                            FormulationID = r.x.a.FormulationId,
+                            TradeID = r.x.a.TradeId,
+                            TradeName = r.x.a.TradeName,
+                            PackSize = r.x.a.PackSize,
+                            Packing = r.x.a.Packing,
+                            PackingDesc = r.x.p.CodeDesc,
+                            ManufacturerID = r.x.a.ManufacturerId,
+                            ISDCode = r.x.a.Isdcode,
+                            BarcodeID = r.x.a.BarcodeId,
+                            ActiveStatus = r.x.a.ActiveStatus,
+                            Skutype = r.y.Skutype,
+                            Skucode = r.y.Skucode
                         }).ToListAsync();
-                    //foreach (var obj in result)
-                    //{
-                    //    if (obj.InventoryClass == "S")
-                    //    {
-                    //        obj.InventoryClass = "Stockable";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.InventoryClass = "Non-Stockable";
-                    //    }
-
-                    //    if (obj.ItemClass == "B")
-                    //    {
-                    //        obj.ItemClass = "Bought Out";
-                    //    }
-                    //    else if (obj.ItemClass == "C")
-                    //    {
-                    //        obj.ItemClass = "Consignment";
-                    //    }
-                    //    else if (obj.ItemClass == "I")
-                    //    {
-                    //        obj.ItemClass = "In-House";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemClass = "Sub Contract";
-                    //    }
-
-                    //    if (obj.ItemSource == "L")
-                    //    {
-                    //        obj.ItemSource = "Local";
-                    //    }
-                    //    else if (obj.ItemSource == "I")
-                    //    {
-                    //        obj.ItemSource = "Imported";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemSource = "Out Station";
-                    //    }
-
-                    //    if (obj.ItemCriticality == "D")
-                    //    {
-                    //        obj.ItemCriticality = "Desirable";
-                    //    }
-                    //    else if (obj.ItemCriticality == "E")
-                    //    {
-                    //        obj.ItemCriticality = "Essential";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemCriticality = "Vital";
-                    //    }
-                    //}
+                    
                     return result;
                 }
             }
@@ -230,81 +135,34 @@ namespace eSya.ManagePharmacy.DL.Repository
                 {
 
 
-                    var result = await db.GtEphmdbs.Where(w => w.TradeId == TradeID).Join(db.GtEskucds.Where(q=> q.Skutype == "D"),
-                         x => x.TradeId,
+                    var result = await db.GtEphmdbs.Where(w => w.TradeId == TradeID)
+                        .Join(db.GtEcapcds,
+                       a => a.Packing,
+                       p => p.ApplicationCode,
+                       (a, p) => new { a, p })
+                        .Join(db.GtEskucds.Where(q=> q.Skutype == "D"),
+                         x => x.a.TradeId,
                          y => y.Skucode,
                          (x, y) => new { x, y })
                          .Select(r => new DO_DrugBrands
                          {
                              Skuid = r.y.Skuid,
-                             CompositionID = r.x.CompositionId,
-                             FormulationID = r.x.FormulationId,
-                             TradeID = r.x.TradeId,
-                             TradeName = r.x.TradeName,
-                             PackSize = r.x.PackSize,
-                             Packing = r.x.Packing,
-                             ManufacturerID = r.x.ManufacturerId,
-                             ISDCode = r.x.Isdcode,
-                             BarcodeID = r.x.BarcodeId,
-                             ActiveStatus = r.x.ActiveStatus,
+                             CompositionID = r.x.a.CompositionId,
+                             FormulationID = r.x.a.FormulationId,
+                             TradeID = r.x.a.TradeId,
+                             TradeName = r.x.a.TradeName,
+                             PackSize = r.x.a.PackSize,
+                             Packing = r.x.a.Packing,
+                             PackingDesc = r.x.p.CodeDesc,
+                             ManufacturerID = r.x.a.ManufacturerId,
+                             ISDCode = r.x.a.Isdcode,
+                             BarcodeID = r.x.a.BarcodeId,
+                             ActiveStatus = r.x.a.ActiveStatus,
                              Skutype = r.y.Skutype,
                              Skucode = r.y.Skucode
 
                          }).ToListAsync();
-                    //foreach (var obj in result)
-                    //{
-                    //    if (obj.InventoryClass == "S")
-                    //    {
-                    //        obj.InventoryClass = "Stockable";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.InventoryClass = "Non-Stockable";
-                    //    }
-
-                    //    if (obj.ItemClass == "B")
-                    //    {
-                    //        obj.ItemClass = "Bought Out";
-                    //    }
-                    //    else if (obj.ItemClass == "C")
-                    //    {
-                    //        obj.ItemClass = "Consignment";
-                    //    }
-                    //    else if (obj.ItemClass == "I")
-                    //    {
-                    //        obj.ItemClass = "In-House";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemClass = "Sub Contract";
-                    //    }
-
-                    //    if (obj.ItemSource == "L")
-                    //    {
-                    //        obj.ItemSource = "Local";
-                    //    }
-                    //    else if (obj.ItemSource == "I")
-                    //    {
-                    //        obj.ItemSource = "Imported";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemSource = "Out Station";
-                    //    }
-
-                    //    if (obj.ItemCriticality == "D")
-                    //    {
-                    //        obj.ItemCriticality = "Desirable";
-                    //    }
-                    //    else if (obj.ItemCriticality == "E")
-                    //    {
-                    //        obj.ItemCriticality = "Essential";
-                    //    }
-                    //    else
-                    //    {
-                    //        obj.ItemCriticality = "Vital";
-                    //    }
-                    //}
+                    
                     return result;
                 }
             }
@@ -313,7 +171,37 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
-        public async Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands drugBrands)
+
+        public async Task<DO_DrugBrands> GetDrugBrandParameterList(int TradeID)
+        {
+            using (var db = new eSyaEnterprise())
+            {
+                try
+                {
+                    var ds = db.GtEphmdbs
+                        .Where(w => w.TradeId == TradeID)
+                        .Select(r => new DO_DrugBrands
+                        {
+                            l_FormParameter = r.GtEphdpas.Select(p => new DO_eSyaParameter
+                            {
+                                ParameterID = p.ParameterId,
+                                ParmAction = p.ParmAction,
+                                ParmPerct = p.ParmPerc,
+                                ParmDesc = p.ParmDesc,
+                                ParmValue = p.ParmValue
+                            }).ToList()
+                        }).FirstOrDefaultAsync();
+
+                    return await ds;
+                }
+                catch (Exception ex)
+                {
+                    throw ex;
+                }
+            }
+        }
+
+        public async Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands obj)
         {
             using (var db = new eSyaEnterprise())
             {
@@ -321,7 +209,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                 {
                     try
                     {
-                        GtEphmdb is_itemDescExists = db.GtEphmdbs.FirstOrDefault(u => u.TradeName.ToUpper().Replace(" ", "") == drugBrands.TradeName.ToUpper().Replace(" ", ""));
+                        GtEphmdb is_itemDescExists = db.GtEphmdbs.FirstOrDefault(u => u.TradeName.ToUpper().Replace(" ", "") == obj.TradeName.ToUpper().Replace(" ", ""));
                         if (is_itemDescExists != null)
                         {
                             return new DO_ReturnParameter() { Status = false, StatusCode = "W0127", Message = string.Format(_localizer[name: "W0127"]) };
@@ -332,24 +220,24 @@ namespace eSya.ManagePharmacy.DL.Repository
 
                         var b_Entity = new GtEphmdb
                         {
-                            CompositionId = drugBrands.CompositionID,
-                            FormulationId = drugBrands.FormulationID,
+                            CompositionId = obj.CompositionID,
+                            FormulationId = obj.FormulationID,
                             TradeId = _tradeId,
-                            TradeName = drugBrands.TradeName,
-                            PackSize = drugBrands.PackSize,
-                            Packing = drugBrands.Packing,
-                            ManufacturerId = drugBrands.ManufacturerID,
-                            Isdcode = drugBrands.ISDCode,
-                            BarcodeId = drugBrands.BarcodeID,
-                            ActiveStatus = drugBrands.ActiveStatus,
-                            FormId = drugBrands.FormID,
-                            CreatedBy = drugBrands.UserID,
+                            TradeName = obj.TradeName,
+                            PackSize = obj.PackSize,
+                            Packing = obj.Packing,
+                            ManufacturerId = obj.ManufacturerID,
+                            Isdcode = obj.ISDCode,
+                            BarcodeId = obj.BarcodeID,
+                            ActiveStatus = obj.ActiveStatus,
+                            FormId = obj.FormID,
+                            CreatedBy = obj.UserID,
                             CreatedOn = System.DateTime.Now,
-                            CreatedTerminal = drugBrands.TerminalID
+                            CreatedTerminal = obj.TerminalID
                         };
                         db.GtEphmdbs.Add(b_Entity);
                         
-                        foreach (DO_eSyaParameter ip in drugBrands.l_FormParameter)
+                        foreach (DO_eSyaParameter ip in obj.l_FormParameter)
                         {
                             var pMaster = new GtEphdpa
                             {
@@ -360,10 +248,10 @@ namespace eSya.ManagePharmacy.DL.Repository
                                 ParmDesc = ip.ParmDesc,
                                 ParmValue = ip.ParmValue,
                                 ActiveStatus = ip.ActiveStatus,
-                                FormId = drugBrands.FormID,
-                                CreatedBy = drugBrands.UserID,
+                                FormId = obj.FormID,
+                                CreatedBy = obj.UserID,
                                 CreatedOn = System.DateTime.Now,
-                                CreatedTerminal = drugBrands.TerminalID
+                                CreatedTerminal = obj.TerminalID
                             };
                             db.GtEphdpas.Add(pMaster);
                         }
@@ -376,13 +264,13 @@ namespace eSya.ManagePharmacy.DL.Repository
                         var sku_Entity = new GtEskucd
                         {
                             Skuid = _skuid,
-                            Skutype = drugBrands.Skutype,
+                            Skutype = obj.Skutype,
                             Skucode = _tradeId,
-                            ActiveStatus = drugBrands.ActiveStatus,
-                            FormId = drugBrands.FormID,
-                            CreatedBy = drugBrands.UserID,
+                            ActiveStatus = obj.ActiveStatus,
+                            FormId = obj.FormID,
+                            CreatedBy = obj.UserID,
                             CreatedOn = System.DateTime.Now,
-                            CreatedTerminal = drugBrands.TerminalID
+                            CreatedTerminal = obj.TerminalID
                         };
                         db.GtEskucds.Add(sku_Entity);
                         await db.SaveChangesAsync();
@@ -403,7 +291,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                 }
             }
         }
-        public async Task<DO_ReturnParameter> UpdateDrugBrands(DO_DrugBrands drugBrands)
+        public async Task<DO_ReturnParameter> UpdateDrugBrands(DO_DrugBrands obj)
         {
             using (var db = new eSyaEnterprise())
             {
@@ -411,77 +299,77 @@ namespace eSya.ManagePharmacy.DL.Repository
                 {
                     try
                     {
-                        GtEphmdb is_tradeExists = db.GtEphmdbs.FirstOrDefault(be => be.TradeName.ToUpper().Replace(" ", "") == drugBrands.TradeName.ToUpper().Replace(" ", "") && be.TradeId != drugBrands.TradeID);
+                        GtEphmdb is_tradeExists = db.GtEphmdbs.FirstOrDefault(be => be.TradeName.ToUpper().Replace(" ", "") == obj.TradeName.ToUpper().Replace(" ", "") && be.TradeId != obj.TradeID);
                         if (is_tradeExists != null)
                         {
                             return new DO_ReturnParameter() { Status = false, StatusCode = "W0127", Message = string.Format(_localizer[name: "W0127"]) };
 
                         }
 
-                        GtEphmdb b_Entity = db.GtEphmdbs.Where(be => be.TradeId == drugBrands.TradeID).FirstOrDefault();
+                        GtEphmdb b_Entity = db.GtEphmdbs.Where(be => be.TradeId == obj.TradeID).FirstOrDefault();
 
                         if (b_Entity != null)
                         {
-                            b_Entity.CompositionId = drugBrands.CompositionID;
-                            b_Entity.FormulationId = drugBrands.FormulationID;
-                            b_Entity.TradeId = drugBrands.TradeID;
-                            b_Entity.TradeName = drugBrands.TradeName;
-                            b_Entity.PackSize = drugBrands.PackSize;
-                            b_Entity.Packing = drugBrands.Packing;
-                            b_Entity.ManufacturerId = drugBrands.ManufacturerID;
-                            b_Entity.Isdcode = drugBrands.ISDCode;
-                            b_Entity.BarcodeId = drugBrands.BarcodeID;
-                            b_Entity.ActiveStatus = drugBrands.ActiveStatus;
-                            b_Entity.ModifiedBy = drugBrands.UserID;
+                            b_Entity.CompositionId = obj.CompositionID;
+                            b_Entity.FormulationId = obj.FormulationID;
+                            b_Entity.TradeId = obj.TradeID;
+                            b_Entity.TradeName = obj.TradeName;
+                            b_Entity.PackSize = obj.PackSize;
+                            b_Entity.Packing = obj.Packing;
+                            b_Entity.ManufacturerId = obj.ManufacturerID;
+                            b_Entity.Isdcode = obj.ISDCode;
+                            b_Entity.BarcodeId = obj.BarcodeID;
+                            b_Entity.ActiveStatus = obj.ActiveStatus;
+                            b_Entity.ModifiedBy = obj.UserID;
                             b_Entity.ModifiedOn = System.DateTime.Now;
-                            b_Entity.ModifiedTerminal = drugBrands.TerminalID;
+                            b_Entity.ModifiedTerminal = obj.TerminalID;
 
                             await db.SaveChangesAsync();
 
-                            foreach (DO_eSyaParameter ip in drugBrands.l_FormParameter)
+                            foreach (DO_eSyaParameter ip in obj.l_FormParameter)
                             {
-                                GtEphdpa sPar = db.GtEphdpas.Where(x => x.TradeId == drugBrands.TradeID && x.ParameterId == ip.ParameterID).FirstOrDefault();
+                                GtEphdpa sPar = db.GtEphdpas.Where(x => x.TradeId == obj.TradeID && x.ParameterId == ip.ParameterID).FirstOrDefault();
                                 if (sPar != null)
                                 {
                                     sPar.ParmAction = ip.ParmAction;
                                     sPar.ParmDesc = ip.ParmDesc;
                                     sPar.ParmPerc = ip.ParmPerct;
                                     sPar.ParmValue = ip.ParmValue;
-                                    sPar.ActiveStatus = drugBrands.ActiveStatus;
-                                    sPar.ModifiedBy = drugBrands.UserID;
+                                    sPar.ActiveStatus = obj.ActiveStatus;
+                                    sPar.ModifiedBy = obj.UserID;
                                     sPar.ModifiedOn = System.DateTime.Now;
-                                    sPar.ModifiedTerminal = drugBrands.TerminalID;
+                                    sPar.ModifiedTerminal = obj.TerminalID;
                                 }
                                 else
                                 {
                                     var pMaster = new GtEphdpa
                                     {
-                                        TradeId = drugBrands.TradeID,
+                                        TradeId = obj.TradeID,
                                         ParameterId = ip.ParameterID,
                                         ParmPerc = ip.ParmPerct,
                                         ParmAction = ip.ParmAction,
                                         ParmDesc = ip.ParmDesc,
                                         ParmValue = ip.ParmValue,
                                         ActiveStatus = ip.ActiveStatus,
-                                        FormId = drugBrands.FormID,
-                                        CreatedBy = drugBrands.UserID,
+                                        FormId = obj.FormID,
+                                        CreatedBy = obj.UserID,
                                         CreatedOn = System.DateTime.Now,
-                                        CreatedTerminal = drugBrands.TerminalID
+                                        CreatedTerminal = obj.TerminalID
                                     };
                                     db.GtEphdpas.Add(pMaster);
                                 }
                                 await db.SaveChangesAsync();
                             }
 
-                            GtEskucd _sku = db.GtEskucds.FirstOrDefault(x => x.Skuid == drugBrands.Skuid && x.Skucode == drugBrands.Skucode);
+                            GtEskucd _sku = db.GtEskucds.FirstOrDefault(x => x.Skuid == obj.Skuid && x.Skucode == obj.Skucode);
                             if (_sku != null)
                             {
-                                _sku.Skutype = drugBrands.Skutype;
-                                _sku.Skucode = drugBrands.Skucode;
-                                _sku.ActiveStatus = drugBrands.ActiveStatus;
-                                _sku.ModifiedBy = drugBrands.UserID;
+                                _sku.Skutype = obj.Skutype;
+                                _sku.Skucode = obj.Skucode;
+                                _sku.ActiveStatus = obj.ActiveStatus;
+                                _sku.ModifiedBy = obj.UserID;
                                 _sku.ModifiedOn = System.DateTime.Now;
-                                _sku.ModifiedTerminal = drugBrands.TerminalID;
+                                _sku.ModifiedTerminal = obj.TerminalID;
                             }
                             await db.SaveChangesAsync();
 

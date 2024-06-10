@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using eSya.ManagePharmacy.IF;
+using eSya.ManagePharmacy.DL.Entities;
 
 namespace eSya.ManagePharmacy.WebAPI.Controllers
 {
@@ -54,6 +55,18 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         public async Task<IActionResult> GetManufacturers(int CompositionId, int FormulationID)
         {
             var ds = await _commonRepository.GetManufacturers(CompositionId, FormulationID);
+            return Ok(ds);
+        }
+
+        /// <summary>
+        /// Get ISDCodes.
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetISDCodes()
+        {
+            var ds = await _commonRepository.GetISDCodes();
             return Ok(ds);
         }
     }

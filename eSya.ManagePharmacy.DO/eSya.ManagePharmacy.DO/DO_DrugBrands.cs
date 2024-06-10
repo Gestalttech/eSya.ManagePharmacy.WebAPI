@@ -17,6 +17,7 @@ namespace eSya.ManagePharmacy.DO
         public string TradeName { get; set; }
         public int PackSize { get; set; }
         public int Packing { get; set; }
+        public string PackingDesc { get; set; }
         public int ManufacturerID { get; set; }
         public int ISDCode { get; set; }
         public string BarcodeID { get; set; }

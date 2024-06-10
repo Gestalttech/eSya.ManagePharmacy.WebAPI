@@ -14,8 +14,9 @@ namespace eSya.ManagePharmacy.IF
         Task<List<DO_DrugBrands>> GetFullDrugBrandList();
         Task<List<DO_DrugBrands>> GetDrugBrandListByGroup(int CompositionID, int FormulationID, int ManufacturerID);
         Task<List<DO_DrugBrands>> GetDrugBrandListByTradeID(int TradeID);
-        Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands drugBrands);
-        Task<DO_ReturnParameter> UpdateDrugBrands(DO_DrugBrands drugBrands);
+        Task<DO_DrugBrands> GetDrugBrandParameterList(int TradeID);
+        Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands obj);
+        Task<DO_ReturnParameter> UpdateDrugBrands(DO_DrugBrands obj);
         #endregion Drug Brands
     }
 }

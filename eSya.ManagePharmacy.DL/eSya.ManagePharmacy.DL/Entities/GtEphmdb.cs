@@ -5,6 +5,10 @@ namespace eSya.ManagePharmacy.DL.Entities
 {
     public partial class GtEphmdb
     {
+        public GtEphmdb()
+        {
+            GtEphdpas = new HashSet<GtEphdpa>();
+        }
         public int CompositionId { get; set; }
         public int FormulationId { get; set; }
         public int TradeId { get; set; }
@@ -22,5 +26,7 @@ namespace eSya.ManagePharmacy.DL.Entities
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public string? ModifiedTerminal { get; set; }
+
+        public virtual ICollection<GtEphdpa> GtEphdpas { get; set; }
     }
 }

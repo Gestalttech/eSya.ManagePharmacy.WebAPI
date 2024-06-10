@@ -29,6 +29,17 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         }
 
         /// <summary>
+        /// Getting  Full Drug Brand LIst.
+        /// UI Reffered - Drug Brands.
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetFullDrugBrandList()
+        {
+            var i_Codes = await _drugBrandRepository.GetFullDrugBrandList();
+            return Ok(i_Codes);
+        }
+
+        /// <summary>
         /// Getting  Selected Drug Brand LIst.
         /// UI Reffered - Drug Brands
         /// </summary>
@@ -51,24 +62,35 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         }
 
         /// <summary>
-        /// Insert Item Codes.
-        /// UI Reffered - Item Codes
+        /// Getting  Drug Brands Parameter List.
+        /// UI Reffered - Drug Brands
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetDrugBrandParameterList(int TradeID)
+        {
+            var i_Codes = await _drugBrandRepository.GetDrugBrandParameterList(TradeID);
+            return Ok(i_Codes);
+        }
+
+        /// <summary>
+        /// Insert Drug Brands
+        /// UI Reffered - Drug Brands
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> InsertDrugBrands(DO_DrugBrands drugBrands)
+        public async Task<IActionResult> InsertDrugBrands(DO_DrugBrands obj)
         {
-            var msg = await _drugBrandRepository.InsertDrugBrands(drugBrands);
+            var msg = await _drugBrandRepository.InsertDrugBrands(obj);
             return Ok(msg);
         }
 
         /// <summary>
-        /// Update Item Codes.
-        /// UI Reffered - Item Codes
+        /// Update Drug Brands
+        /// UI Reffered - Drug Brands
         /// </summary>
-        [HttpPost]
-        public async Task<IActionResult> UpdateDrugBrands(DO_DrugBrands drugBrands)
+        [HttpPost]     
+        public async Task<IActionResult> UpdateDrugBrands(DO_DrugBrands obj)
         {
-            var msg = await _drugBrandRepository.UpdateDrugBrands(drugBrands);
+            var msg = await _drugBrandRepository.UpdateDrugBrands(obj);
             return Ok(msg);
 
         }
