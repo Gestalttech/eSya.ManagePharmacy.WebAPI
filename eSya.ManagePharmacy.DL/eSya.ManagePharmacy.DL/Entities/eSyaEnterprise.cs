@@ -18,6 +18,7 @@ namespace eSya.ManagePharmacy.DL.Entities
         }
 
         public virtual DbSet<GtEcapcd> GtEcapcds { get; set; } = null!;
+        public virtual DbSet<GtEcbsln> GtEcbslns { get; set; } = null!;
         public virtual DbSet<GtEccncd> GtEccncds { get; set; } = null!;
         public virtual DbSet<GtEphdbl> GtEphdbls { get; set; } = null!;
         public virtual DbSet<GtEphdco> GtEphdcos { get; set; } = null!;
@@ -69,6 +70,52 @@ namespace eSya.ManagePharmacy.DL.Entities
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
 
                 entity.Property(e => e.ShortCode).HasMaxLength(15);
+            });
+
+            modelBuilder.Entity<GtEcbsln>(entity =>
+            {
+                entity.HasKey(e => new { e.BusinessId, e.LocationId });
+
+                entity.ToTable("GT_ECBSLN");
+
+                entity.HasIndex(e => e.BusinessKey, "IX_GT_ECBSLN")
+                    .IsUnique();
+
+                entity.Property(e => e.BusinessId).HasColumnName("BusinessID");
+
+                entity.Property(e => e.BusinessName).HasMaxLength(100);
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.CurrencyCode).HasMaxLength(4);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.Isdcode).HasColumnName("ISDCode");
+
+                entity.Property(e => e.LocationDescription).HasMaxLength(150);
+
+                entity.Property(e => e.Lstatus).HasColumnName("LStatus");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.ShortDesc).HasMaxLength(15);
+
+                entity.Property(e => e.TocurrConversion).HasColumnName("TOCurrConversion");
+
+                entity.Property(e => e.TolocalCurrency)
+                    .IsRequired()
+                    .HasColumnName("TOLocalCurrency")
+                    .HasDefaultValueSql("((1))");
+
+                entity.Property(e => e.TorealCurrency).HasColumnName("TORealCurrency");
             });
 
             modelBuilder.Entity<GtEccncd>(entity =>

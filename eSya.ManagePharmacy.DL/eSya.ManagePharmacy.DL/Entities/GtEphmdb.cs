@@ -26,7 +26,6 @@ namespace eSya.ManagePharmacy.DL.Entities
         public int? ModifiedBy { get; set; }
         public DateTime? ModifiedOn { get; set; }
         public string? ModifiedTerminal { get; set; }
-
         public virtual ICollection<GtEphdpa> GtEphdpas { get; set; }
     }
 }
