@@ -201,6 +201,43 @@ namespace eSya.ManagePharmacy.DL.Repository
             }
         }
 
+        public async Task<List<DO_DrugBrands>> GetBusinessKey(int TradeId)
+        {
+            try
+            {
+                using (var db = new eSyaEnterprise())
+                {
+                    var ds = await db.GtEcbslns.Where(x => x.ActiveStatus)
+                        .Select(r => new DO_DrugBrands
+                        {
+                            BusinessKey = r.BusinessKey,
+                            TradeID = TradeId,
+                            LocationDescription = r.BusinessName + "-" + r.LocationDescription,
+                            ActiveStatus = false,
+                        }).ToListAsync();
+
+                    foreach (var obj in ds)
+                    {
+                        GtEphdbl pf = db.GtEphdbls.Where(x => x.BusinessKey == obj.BusinessKey && x.TradeId == obj.TradeID).FirstOrDefault();
+                        if (pf != null)
+                        {
+                            obj.ActiveStatus = pf.ActiveStatus;
+                        }
+                        else
+                        {
+                            obj.ActiveStatus = false;
+
+                        }
+                    }
+                    return ds;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
         public async Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands obj)
         {
             using (var db = new eSyaEnterprise())

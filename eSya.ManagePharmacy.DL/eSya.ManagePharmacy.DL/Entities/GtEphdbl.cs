@@ -7,7 +7,6 @@ namespace eSya.ManagePharmacy.DL.Entities
     {
         public int BusinessKey { get; set; }
         public int TradeId { get; set; }
-        public int StoreCode { get; set; }
         public bool ActiveStatus { get; set; }
         public string FormId { get; set; } = null!;
         public int CreatedBy { get; set; }

@@ -180,7 +180,7 @@ namespace eSya.ManagePharmacy.DL.Entities
 
             modelBuilder.Entity<GtEphdbl>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessKey, e.TradeId, e.StoreCode });
+                entity.HasKey(e => new { e.BusinessKey, e.TradeId });
 
                 entity.ToTable("GT_EPHDBL");
 

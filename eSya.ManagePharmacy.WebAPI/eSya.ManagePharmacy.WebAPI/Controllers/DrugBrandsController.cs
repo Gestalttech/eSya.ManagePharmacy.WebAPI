@@ -95,6 +95,16 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
 
         }
 
+        /// <summary>
+        /// Get Business key.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBusinessKey(int TradeId)
+        {
+            var ds = await _drugBrandRepository.GetBusinessKey(TradeId);
+            return Ok(ds);
+        }
         #endregion Drug Brand
     }
 }

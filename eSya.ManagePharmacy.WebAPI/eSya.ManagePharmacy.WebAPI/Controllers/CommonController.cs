@@ -69,16 +69,5 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
             var ds = await _commonRepository.GetISDCodes();
             return Ok(ds);
         }
-
-        /// <summary>
-        /// Get Business key.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetBusinessKey()
-        {
-            var ds = await _commonRepository.GetBusinessKey();
-            return Ok(ds);
-        }
     }
 }
