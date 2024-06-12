@@ -25,6 +25,7 @@ namespace eSya.ManagePharmacy.DL.Entities
         public virtual DbSet<GtEphdcp> GtEphdcps { get; set; } = null!;
         public virtual DbSet<GtEphdfm> GtEphdfms { get; set; } = null!;
         public virtual DbSet<GtEphdfr> GtEphdfrs { get; set; } = null!;
+        public virtual DbSet<GtEphdml> GtEphdmls { get; set; } = null!;
         public virtual DbSet<GtEphdpa> GtEphdpas { get; set; } = null!;
         public virtual DbSet<GtEphdrc> GtEphdrcs { get; set; } = null!;
         public virtual DbSet<GtEphdtc> GtEphdtcs { get; set; } = null!;
@@ -180,7 +181,8 @@ namespace eSya.ManagePharmacy.DL.Entities
 
             modelBuilder.Entity<GtEphdbl>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessKey, e.TradeId });
+                entity.HasKey(e => new { e.BusinessKey, e.TradeId })
+                    .HasName("PK_GT_EPHDBL_1");
 
                 entity.ToTable("GT_EPHDBL");
 
@@ -316,6 +318,40 @@ namespace eSya.ManagePharmacy.DL.Entities
                     .IsUnicode(false);
             });
 
+            modelBuilder.Entity<GtEphdml>(entity =>
+            {
+                entity.HasKey(e => new { e.BusinessKey, e.TradeId, e.ManufacturerId });
+
+                entity.ToTable("GT_EPHDML");
+
+                entity.Property(e => e.TradeId).HasColumnName("TradeID");
+
+                entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.LastMrpdate)
+                    .HasColumnType("datetime")
+                    .HasColumnName("LastMRPDate");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.Mrp)
+                    .HasColumnType("numeric(18, 6)")
+                    .HasColumnName("MRP");
+
+                entity.Property(e => e.PurchaseRate).HasColumnType("numeric(18, 6)");
+            });
+
             modelBuilder.Entity<GtEphdpa>(entity =>
             {
                 entity.HasKey(e => new { e.TradeId, e.ParameterId });
@@ -436,17 +472,20 @@ namespace eSya.ManagePharmacy.DL.Entities
 
             modelBuilder.Entity<GtEphmdb>(entity =>
             {
-                entity.HasKey(e => e.CompositionId);
+                entity.HasKey(e => e.TradeId)
+                    .HasName("PK_GT_EPHMDB_1");
 
                 entity.ToTable("GT_EPHMDB");
 
-                entity.Property(e => e.CompositionId)
+                entity.Property(e => e.TradeId)
                     .ValueGeneratedNever()
-                    .HasColumnName("CompositionID");
+                    .HasColumnName("TradeID");
 
                 entity.Property(e => e.BarcodeId)
                     .HasMaxLength(20)
                     .HasColumnName("BarcodeID");
+
+                entity.Property(e => e.CompositionId).HasColumnName("CompositionID");
 
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
@@ -466,8 +505,6 @@ namespace eSya.ManagePharmacy.DL.Entities
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
-
-                entity.Property(e => e.TradeId).HasColumnName("TradeID");
 
                 entity.Property(e => e.TradeName).HasMaxLength(75);
             });

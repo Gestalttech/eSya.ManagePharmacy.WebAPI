@@ -201,14 +201,14 @@ namespace eSya.ManagePharmacy.DL.Repository
             }
         }
 
-        public async Task<List<DO_DrugBrands>> GetBusinessKey(int TradeId)
+        public async Task<List<DO_BusinessLocation>> GetBusinessKey(int TradeId)
         {
             try
             {
                 using (var db = new eSyaEnterprise())
                 {
                     var ds = await db.GtEcbslns.Where(x => x.ActiveStatus)
-                        .Select(r => new DO_DrugBrands
+                        .Select(r => new DO_BusinessLocation
                         {
                             BusinessKey = r.BusinessKey,
                             TradeID = TradeId,
@@ -292,7 +292,37 @@ namespace eSya.ManagePharmacy.DL.Repository
                             };
                             db.GtEphdpas.Add(pMaster);
                         }
-                        
+
+                        foreach (DO_BusinessLocation ib in obj.l_BusinessLocation)
+                        {
+                            var bMaster = new GtEphdbl
+                            {
+                                BusinessKey = ib.BusinessKey,
+                                TradeId = _tradeId,
+                                ActiveStatus = ib.ActiveStatus,
+                                FormId = obj.FormID,
+                                CreatedBy = obj.UserID,
+                                CreatedOn = System.DateTime.Now,
+                                CreatedTerminal = obj.TerminalID
+                            };
+                            db.GtEphdbls.Add(bMaster);
+
+                            var dml_Entity = new GtEphdml
+                            {
+                                BusinessKey = ib.BusinessKey,
+                                TradeId = _tradeId,
+                                ManufacturerId = obj.ManufacturerID,
+                                PurchaseRate = 0,
+                                Mrp = 0,
+                                ActiveStatus = ib.ActiveStatus,
+                                FormId = obj.FormID,
+                                CreatedBy = obj.UserID,
+                                CreatedOn = System.DateTime.Now,
+                                CreatedTerminal = obj.TerminalID
+                            };
+                            db.GtEphdmls.Add(dml_Entity);
+                        }
+
                         await db.SaveChangesAsync();
 
                         int _skuid = db.GtEskucds.Select(c => c.Skuid).DefaultIfEmpty().Max();
@@ -365,7 +395,7 @@ namespace eSya.ManagePharmacy.DL.Repository
 
                             foreach (DO_eSyaParameter ip in obj.l_FormParameter)
                             {
-                                GtEphdpa sPar = db.GtEphdpas.Where(x => x.TradeId == obj.TradeID && x.ParameterId == ip.ParameterID).FirstOrDefault();
+                                var sPar = db.GtEphdpas.Where(x => x.TradeId == obj.TradeID && x.ParameterId == ip.ParameterID).FirstOrDefault();
                                 if (sPar != null)
                                 {
                                     sPar.ParmAction = ip.ParmAction;
@@ -394,6 +424,59 @@ namespace eSya.ManagePharmacy.DL.Repository
                                         CreatedTerminal = obj.TerminalID
                                     };
                                     db.GtEphdpas.Add(pMaster);
+                                }
+                                await db.SaveChangesAsync();
+                            }
+
+                            foreach (DO_BusinessLocation ib in obj.l_BusinessLocation)
+                            {
+                                GtEphdbl blink = db.GtEphdbls.Where(x => x.TradeId == obj.TradeID && x.BusinessKey == ib.BusinessKey).FirstOrDefault();
+                                if (blink != null)
+                                {
+                                    blink.ActiveStatus = obj.ActiveStatus;
+                                    blink.ModifiedBy = obj.UserID;
+                                    blink.ModifiedOn = System.DateTime.Now;
+                                    blink.ModifiedTerminal = obj.TerminalID;
+                                }
+                                else
+                                {
+                                    var bMaster = new GtEphdbl
+                                    {
+                                        TradeId = obj.TradeID,
+                                        BusinessKey = ib.BusinessKey,
+                                        ActiveStatus = ib.ActiveStatus,
+                                        FormId = obj.FormID,
+                                        CreatedBy = obj.UserID,
+                                        CreatedOn = System.DateTime.Now,
+                                        CreatedTerminal = obj.TerminalID
+                                    };
+                                    db.GtEphdbls.Add(bMaster);
+                                }
+
+                                GtEphdml mdllink = db.GtEphdmls.Where(x => x.TradeId == obj.TradeID && x.BusinessKey == ib.BusinessKey && x.ManufacturerId == obj.ManufacturerID).FirstOrDefault();
+                                if (mdllink != null)
+                                {
+                                    mdllink.ActiveStatus = obj.ActiveStatus;
+                                    mdllink.ModifiedBy = obj.UserID;
+                                    mdllink.ModifiedOn = System.DateTime.Now;
+                                    mdllink.ModifiedTerminal = obj.TerminalID;
+                                }
+                                else
+                                {
+                                    var dml_Entity = new GtEphdml
+                                    {
+                                        BusinessKey = ib.BusinessKey,
+                                        TradeId = obj.TradeID,
+                                        ManufacturerId = obj.ManufacturerID,
+                                        PurchaseRate = 0,
+                                        Mrp = 0,
+                                        ActiveStatus = ib.ActiveStatus,
+                                        FormId = obj.FormID,
+                                        CreatedBy = obj.UserID,
+                                        CreatedOn = System.DateTime.Now,
+                                        CreatedTerminal = obj.TerminalID
+                                    };
+                                    db.GtEphdmls.Add(dml_Entity);
                                 }
                                 await db.SaveChangesAsync();
                             }

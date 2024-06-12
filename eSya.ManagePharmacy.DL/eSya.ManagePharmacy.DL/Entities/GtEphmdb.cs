@@ -9,9 +9,9 @@ namespace eSya.ManagePharmacy.DL.Entities
         {
             GtEphdpas = new HashSet<GtEphdpa>();
         }
+        public int TradeId { get; set; }
         public int CompositionId { get; set; }
         public int FormulationId { get; set; }
-        public int TradeId { get; set; }
         public string TradeName { get; set; } = null!;
         public int PackSize { get; set; }
         public int Packing { get; set; }
