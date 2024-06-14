@@ -303,11 +303,15 @@ namespace eSya.ManagePharmacy.DL.Repository
                             };
                             db.GtEphdbls.Add(bMaster);
 
+                            int _srNo = db.GtEphdmls.Select(c => c.SerialNumber).DefaultIfEmpty().Max();
+                            _srNo = _srNo + 1;
+
                             var dml_Entity = new GtEphdml
                             {
                                 BusinessKey = ib.BusinessKey,
                                 TradeId = _tradeId,
                                 ManufacturerId = obj.ManufacturerID,
+                                SerialNumber = _srNo,
                                 EffectiveFrom = System.DateTime.Now,
                                 PurchaseRate = 0,
                                 Mrp = 0,
@@ -460,11 +464,14 @@ namespace eSya.ManagePharmacy.DL.Repository
                                 }
                                 else
                                 {
+                                    int _srNo = db.GtEphdmls.Select(c => c.SerialNumber).DefaultIfEmpty().Max();
+                                    _srNo = _srNo + 1;
                                     var dml_Entity = new GtEphdml
                                     {
                                         BusinessKey = ib.BusinessKey,
                                         TradeId = obj.TradeID,
                                         ManufacturerId = obj.ManufacturerID,
+                                        SerialNumber = _srNo,
                                         EffectiveFrom = System.DateTime.Now,
                                         PurchaseRate = 0,
                                         Mrp = 0,
@@ -532,15 +539,15 @@ namespace eSya.ManagePharmacy.DL.Repository
                        (a, p) => new { a, p })
                         .Select(r => new DO_DrugManufacturerLink
                         {
-                            BusinessKey = r.a.BusinessKey,
-                            ManufacturerID = r.a.ManufacturerId,
+                            //BusinessKey = r.a.BusinessKey,
+                            //ManufacturerID = r.a.ManufacturerId,
                             TradeID = r.a.TradeId,
                             TradeName = r.p.TradeName,
                             EffectiveFrom = r.a.EffectiveFrom,
                             PurchaseRate = r.a.PurchaseRate,
                             MRP = r.a.Mrp,
                             LastMRPDate = r.a.LastMrpdate,
-                            EffectiveTill = r.a.EffectiveTill,
+                            //EffectiveTill = r.a.EffectiveTill,
                             ActiveStatus = r.a.ActiveStatus
                         }).ToListAsync();
 
@@ -553,7 +560,7 @@ namespace eSya.ManagePharmacy.DL.Repository
             }
         }
 
-        public async Task<DO_ReturnParameter> UpdateDrugManufacturer(List<DO_DrugManufacturerLink> obj)
+        public async Task<DO_ReturnParameter> AddOrUpdateDrugManufacturer(List<DO_DrugManufacturerLink> obj)
         {
             using (var db = new eSyaEnterprise())
             {
@@ -563,7 +570,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                     {
                         foreach (var ser_br in obj)
                         {
-                            GtEphdml mdllink = db.GtEphdmls.Where(x => x.BusinessKey == ser_br.BusinessKey && x.TradeId == ser_br.TradeID && x.ManufacturerId == ser_br.ManufacturerID && x.EffectiveTill == null && ser_br.PurchaseRate ==0).FirstOrDefault();
+                            GtEphdml mdllink = db.GtEphdmls.Where(x => x.BusinessKey == ser_br.BusinessKey && x.TradeId == ser_br.TradeID && x.ManufacturerId == ser_br.ManufacturerID && x.EffectiveTill == null && x.PurchaseRate ==0 && ser_br.PurchaseRate !=0).FirstOrDefault();
                             if (mdllink != null)
                             {
                                 mdllink.EffectiveFrom = ser_br.EffectiveFrom;
@@ -579,7 +586,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                             
                             await db.SaveChangesAsync();
                         }
-
+                        dbContext.Commit();
                         return new DO_ReturnParameter() { Status = true, StatusCode = "S0002", Message = string.Format(_localizer[name: "S0002"]) };
                     }
                     catch (DbUpdateException ex)

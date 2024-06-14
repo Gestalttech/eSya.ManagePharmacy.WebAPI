@@ -81,5 +81,17 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
             var ds = await _commonRepository.GetBusinessKey();
             return Ok(ds);
         }
+
+        /// <summary>
+        /// Get Business Location.
+        /// 
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetManufacturersList()
+        {
+            var ds = await _commonRepository.GetManufacturersList();
+            return Ok(ds);
+        }
     }
 }

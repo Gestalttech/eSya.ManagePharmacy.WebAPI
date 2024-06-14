@@ -8,6 +8,7 @@ namespace eSya.ManagePharmacy.DL.Entities
         public int BusinessKey { get; set; }
         public int TradeId { get; set; }
         public int ManufacturerId { get; set; }
+        public int SerialNumber { get; set; }
         public DateTime EffectiveFrom { get; set; }
         public decimal PurchaseRate { get; set; }
         public decimal Mrp { get; set; }

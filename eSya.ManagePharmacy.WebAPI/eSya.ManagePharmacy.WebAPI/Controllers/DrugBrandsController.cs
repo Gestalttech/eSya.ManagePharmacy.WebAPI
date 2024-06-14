@@ -126,9 +126,9 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         /// UI Reffered - Drug Manufaturer Link
         /// </summary>
         [HttpPost]
-        public async Task<IActionResult> UpdateDrugManufacturer(DO_DrugManufacturerLink obj)
+        public async Task<IActionResult> AddOrUpdateDrugManufacturer(List<DO_DrugManufacturerLink> obj)
         {
-            var msg = await _drugBrandRepository.UpdateDrugManufacturer(obj);
+            var msg = await _drugBrandRepository.AddOrUpdateDrugManufacturer(obj);
             return Ok(msg);
 
         }
