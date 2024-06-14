@@ -18,6 +18,8 @@ namespace eSya.ManagePharmacy.IF
         Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands obj);
         Task<DO_ReturnParameter> UpdateDrugBrands(DO_DrugBrands obj);
         Task<List<DO_BusinessLocation>> GetBusinessKey(int TradeId);
+        Task<List<DO_DrugManufacturerLink>> GetDrugManufacturerLink(int BusinessKey, int ManufacturerID);
+        Task<DO_ReturnParameter> UpdateDrugManufacturer(DO_DrugManufacturerLink obj);
         #endregion Drug Brands
     }
 }

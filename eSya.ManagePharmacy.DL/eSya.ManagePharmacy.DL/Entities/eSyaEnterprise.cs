@@ -320,7 +320,7 @@ namespace eSya.ManagePharmacy.DL.Entities
 
             modelBuilder.Entity<GtEphdml>(entity =>
             {
-                entity.HasKey(e => new { e.BusinessKey, e.TradeId, e.ManufacturerId });
+                entity.HasKey(e => new { e.BusinessKey, e.TradeId, e.ManufacturerId, e.EffectiveFrom });
 
                 entity.ToTable("GT_EPHDML");
 
@@ -328,9 +328,13 @@ namespace eSya.ManagePharmacy.DL.Entities
 
                 entity.Property(e => e.ManufacturerId).HasColumnName("ManufacturerID");
 
+                entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.EffectiveTill).HasColumnType("datetime");
 
                 entity.Property(e => e.FormId)
                     .HasMaxLength(10)

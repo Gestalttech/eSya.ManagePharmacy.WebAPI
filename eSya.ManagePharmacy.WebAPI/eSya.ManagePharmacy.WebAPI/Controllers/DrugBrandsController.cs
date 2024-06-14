@@ -73,6 +73,17 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
         }
 
         /// <summary>
+        /// Get Business key.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<IActionResult> GetBusinessKey(int TradeId)
+        {
+            var ds = await _drugBrandRepository.GetBusinessKey(TradeId);
+            return Ok(ds);
+        }
+
+        /// <summary>
         /// Insert Drug Brands
         /// UI Reffered - Drug Brands
         /// </summary>
@@ -95,16 +106,32 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
 
         }
 
-        /// <summary>
-        /// Get Business key.
-        /// </summary>
-        /// <returns></returns>
-        [HttpGet]
-        public async Task<IActionResult> GetBusinessKey(int TradeId)
-        {
-            var ds = await _drugBrandRepository.GetBusinessKey(TradeId);
-            return Ok(ds);
-        }
         #endregion Drug Brand
+
+        #region Drug Manufacturer Link
+
+        /// <summary>
+        /// Getting  Drug Brand LIst For Manufacturer.
+        /// UI Reffered - Drug Manufaturer Link
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetDrugManufacturerLink(int BusinessKey, int ManufacturerID)
+        {
+            var i_Codes = await _drugBrandRepository.GetDrugManufacturerLink(BusinessKey, ManufacturerID);
+            return Ok(i_Codes);
+        }
+
+        /// <summary>
+        /// Update Drug Manufaturer Link
+        /// UI Reffered - Drug Manufaturer Link
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> UpdateDrugManufacturer(DO_DrugManufacturerLink obj)
+        {
+            var msg = await _drugBrandRepository.UpdateDrugManufacturer(obj);
+            return Ok(msg);
+
+        }
+        #endregion Drug Manufacturer Link
     }
 }

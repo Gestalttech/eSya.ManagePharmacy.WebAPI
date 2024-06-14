@@ -14,11 +14,12 @@ namespace eSya.ManagePharmacy.DL.Repository
     public class DrugBrandsRepository : IDrugBrandsRepository
     {
         private readonly IStringLocalizer<DrugBrandsRepository> _localizer;
+
+        #region Drug Brand
         public DrugBrandsRepository(IStringLocalizer<DrugBrandsRepository> localizer)
         {
             _localizer = localizer;
         }
-
         public async Task<List<DO_DrugBrands>> GetDrugBrandList()
         {
             try
@@ -40,7 +41,6 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
-
         public async Task<List<DO_DrugBrands>> GetFullDrugBrandList()
         {
             try
@@ -76,7 +76,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                              Skucode = r.y.Skucode
 
                          }).ToListAsync();
-                    
+
                     return result;
                 }
             }
@@ -85,7 +85,6 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
-
         public async Task<List<DO_DrugBrands>> GetDrugBrandListByGroup(int CompositionID, int FormulationID, int ManufacturerID)
         {
             try
@@ -118,7 +117,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                             Skutype = r.y.Skutype,
                             Skucode = r.y.Skucode
                         }).ToListAsync();
-                    
+
                     return result;
                 }
             }
@@ -140,7 +139,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                        a => a.Packing,
                        p => p.ApplicationCode,
                        (a, p) => new { a, p })
-                        .Join(db.GtEskucds.Where(q=> q.Skutype == "D"),
+                        .Join(db.GtEskucds.Where(q => q.Skutype == "D"),
                          x => x.a.TradeId,
                          y => y.Skucode,
                          (x, y) => new { x, y })
@@ -162,7 +161,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                              Skucode = r.y.Skucode
 
                          }).ToListAsync();
-                    
+
                     return result;
                 }
             }
@@ -171,7 +170,6 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
-
         public async Task<DO_DrugBrands> GetDrugBrandParameterList(int TradeID)
         {
             using (var db = new eSyaEnterprise())
@@ -200,7 +198,6 @@ namespace eSya.ManagePharmacy.DL.Repository
                 }
             }
         }
-
         public async Task<List<DO_BusinessLocation>> GetBusinessKey(int TradeId)
         {
             try
@@ -237,7 +234,6 @@ namespace eSya.ManagePharmacy.DL.Repository
                 throw ex;
             }
         }
-
         public async Task<DO_ReturnParameter> InsertDrugBrands(DO_DrugBrands obj)
         {
             using (var db = new eSyaEnterprise())
@@ -273,7 +269,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                             CreatedTerminal = obj.TerminalID
                         };
                         db.GtEphmdbs.Add(b_Entity);
-                        
+
                         foreach (DO_eSyaParameter ip in obj.l_FormParameter)
                         {
                             var pMaster = new GtEphdpa
@@ -312,6 +308,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                                 BusinessKey = ib.BusinessKey,
                                 TradeId = _tradeId,
                                 ManufacturerId = obj.ManufacturerID,
+                                EffectiveFrom = System.DateTime.Now,
                                 PurchaseRate = 0,
                                 Mrp = 0,
                                 ActiveStatus = ib.ActiveStatus,
@@ -468,6 +465,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                                         BusinessKey = ib.BusinessKey,
                                         TradeId = obj.TradeID,
                                         ManufacturerId = obj.ManufacturerID,
+                                        EffectiveFrom = System.DateTime.Now,
                                         PurchaseRate = 0,
                                         Mrp = 0,
                                         ActiveStatus = ib.ActiveStatus,
@@ -516,5 +514,89 @@ namespace eSya.ManagePharmacy.DL.Repository
                 }
             }
         }
+
+        #endregion Drug Brand
+
+        #region Drug Manufacturer Link
+
+        public async Task<List<DO_DrugManufacturerLink>> GetDrugManufacturerLink(int BusinessKey, int ManufacturerID)
+        {
+            try
+            {
+                using (var db = new eSyaEnterprise())
+                {
+                    var result = await db.GtEphdmls.Where(w => w.BusinessKey == BusinessKey && w.ManufacturerId == ManufacturerID)
+                        .Join(db.GtEphmdbs,
+                       a => a.TradeId,
+                       p => p.TradeId,
+                       (a, p) => new { a, p })
+                        .Select(r => new DO_DrugManufacturerLink
+                        {
+                            BusinessKey = r.a.BusinessKey,
+                            ManufacturerID = r.a.ManufacturerId,
+                            TradeID = r.a.TradeId,
+                            TradeName = r.p.TradeName,
+                            EffectiveFrom = r.a.EffectiveFrom,
+                            PurchaseRate = r.a.PurchaseRate,
+                            MRP = r.a.Mrp,
+                            LastMRPDate = r.a.LastMrpdate,
+                            EffectiveTill = r.a.EffectiveTill,
+                            ActiveStatus = r.a.ActiveStatus
+                        }).ToListAsync();
+
+                    return result;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<DO_ReturnParameter> UpdateDrugManufacturer(List<DO_DrugManufacturerLink> obj)
+        {
+            using (var db = new eSyaEnterprise())
+            {
+                using (var dbContext = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var ser_br in obj)
+                        {
+                            GtEphdml mdllink = db.GtEphdmls.Where(x => x.BusinessKey == ser_br.BusinessKey && x.TradeId == ser_br.TradeID && x.ManufacturerId == ser_br.ManufacturerID && x.EffectiveTill == null && ser_br.PurchaseRate ==0).FirstOrDefault();
+                            if (mdllink != null)
+                            {
+                                mdllink.EffectiveFrom = ser_br.EffectiveFrom;
+                                mdllink.PurchaseRate = ser_br.PurchaseRate;
+                                mdllink.Mrp = ser_br.MRP;
+                                mdllink.LastMrpdate = ser_br.LastMRPDate;
+                                mdllink.EffectiveTill = ser_br.EffectiveTill;
+                                mdllink.ActiveStatus = ser_br.ActiveStatus;
+                                mdllink.ModifiedBy = ser_br.UserID;
+                                mdllink.ModifiedOn = System.DateTime.Now;
+                                mdllink.ModifiedTerminal = ser_br.TerminalID;
+                            }
+                            
+                            await db.SaveChangesAsync();
+                        }
+
+                        return new DO_ReturnParameter() { Status = true, StatusCode = "S0002", Message = string.Format(_localizer[name: "S0002"]) };
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        dbContext.Rollback();
+                        throw new Exception(CommonRepository.GetValidationMessageFromException(ex));
+                    }
+                    catch (Exception ex)
+                    {
+                        dbContext.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+        }
+
+
+        #endregion Drug Manufacturer Link
     }
 }
