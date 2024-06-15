@@ -17,6 +17,8 @@ namespace eSya.ManagePharmacy.DL.Entities
         {
         }
 
+        public virtual DbSet<GtEavnbl> GtEavnbls { get; set; } = null!;
+        public virtual DbSet<GtEavncd> GtEavncds { get; set; } = null!;
         public virtual DbSet<GtEcapcd> GtEcapcds { get; set; } = null!;
         public virtual DbSet<GtEcbsln> GtEcbslns { get; set; } = null!;
         public virtual DbSet<GtEccncd> GtEccncds { get; set; } = null!;
@@ -29,6 +31,7 @@ namespace eSya.ManagePharmacy.DL.Entities
         public virtual DbSet<GtEphdpa> GtEphdpas { get; set; } = null!;
         public virtual DbSet<GtEphdrc> GtEphdrcs { get; set; } = null!;
         public virtual DbSet<GtEphdtc> GtEphdtcs { get; set; } = null!;
+        public virtual DbSet<GtEphdvl> GtEphdvls { get; set; } = null!;
         public virtual DbSet<GtEphgst> GtEphgsts { get; set; } = null!;
         public virtual DbSet<GtEphmdb> GtEphmdbs { get; set; } = null!;
         public virtual DbSet<GtEphmnf> GtEphmnfs { get; set; } = null!;
@@ -46,6 +49,74 @@ namespace eSya.ManagePharmacy.DL.Entities
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
+            modelBuilder.Entity<GtEavnbl>(entity =>
+            {
+                entity.HasKey(e => new { e.VendorId, e.BusinessKey });
+
+                entity.ToTable("GT_EAVNBL");
+
+                entity.Property(e => e.VendorId).HasColumnName("VendorID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.HasOne(d => d.BusinessKeyNavigation)
+                    .WithMany(p => p.GtEavnbls)
+                    .HasPrincipalKey(p => p.BusinessKey)
+                    .HasForeignKey(d => d.BusinessKey)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GT_EAVNBL_GT_ECBSLN");
+
+                entity.HasOne(d => d.Vendor)
+                    .WithMany(p => p.GtEavnbls)
+                    .HasForeignKey(d => d.VendorId)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_GT_EAVNBL_GT_EAVNCD");
+            });
+
+            modelBuilder.Entity<GtEavncd>(entity =>
+            {
+                entity.HasKey(e => e.VendorId);
+
+                entity.ToTable("GT_EAVNCD");
+
+                entity.Property(e => e.VendorId)
+                    .ValueGeneratedNever()
+                    .HasColumnName("VendorID");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.CreditPeriod).HasColumnType("numeric(3, 0)");
+
+                entity.Property(e => e.CreditType)
+                    .HasMaxLength(1)
+                    .IsUnicode(false)
+                    .IsFixedLength();
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.VendorName).HasMaxLength(75);
+            });
+
             modelBuilder.Entity<GtEcapcd>(entity =>
             {
                 entity.HasKey(e => e.ApplicationCode)
@@ -440,6 +511,40 @@ namespace eSya.ManagePharmacy.DL.Entities
                 entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
 
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+            });
+
+            modelBuilder.Entity<GtEphdvl>(entity =>
+            {
+                entity.HasKey(e => new { e.BusinessKey, e.TradeId, e.VendorId });
+
+                entity.ToTable("GT_EPHDVL");
+
+                entity.Property(e => e.TradeId).HasColumnName("TradeID");
+
+                entity.Property(e => e.VendorId).HasColumnName("VendorID");
+
+                entity.Property(e => e.BusinessSharePerc).HasColumnType("numeric(6, 2)");
+
+                entity.Property(e => e.CreatedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.CreatedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.FormId)
+                    .HasMaxLength(10)
+                    .IsUnicode(false)
+                    .HasColumnName("FormID");
+
+                entity.Property(e => e.LastPurchaseRate).HasColumnType("numeric(18, 6)");
+
+                entity.Property(e => e.MinimumSupplyQty).HasColumnType("numeric(18, 6)");
+
+                entity.Property(e => e.ModifiedOn).HasColumnType("datetime");
+
+                entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
+
+                entity.Property(e => e.PartDesc).HasMaxLength(100);
+
+                entity.Property(e => e.PartNumber).HasMaxLength(20);
             });
 
             modelBuilder.Entity<GtEphgst>(entity =>

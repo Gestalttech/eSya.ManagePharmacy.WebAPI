@@ -16,5 +16,6 @@ namespace eSya.ManagePharmacy.IF
         Task<List<DO_CountryCodes>> GetISDCodes();
         Task<List<DO_BusinessLocation>> GetBusinessKey();
         Task<List<DO_DrugComposition>> GetManufacturersList();
+        Task<List<DO_DrugVendorLink>> GetVendorList(int BusinessKey);
     }
 }

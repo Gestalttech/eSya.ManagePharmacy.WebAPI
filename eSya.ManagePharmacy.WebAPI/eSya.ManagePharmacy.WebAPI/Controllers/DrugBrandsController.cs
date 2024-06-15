@@ -133,5 +133,31 @@ namespace eSya.ManagePharmacy.WebAPI.Controllers
 
         }
         #endregion Drug Manufacturer Link
+
+        #region Drug Vendor Link
+
+        /// <summary>
+        /// Getting  Drug Brand LIst For Vendor.
+        /// UI Reffered - Drug Vendor Link
+        /// </summary>
+        [HttpGet]
+        public async Task<IActionResult> GetDrugVendorLink(int BusinessKey, int VendorID)
+        {
+            var i_Codes = await _drugBrandRepository.GetDrugVendorLink(BusinessKey, VendorID);
+            return Ok(i_Codes);
+        }
+
+        /// <summary>
+        /// Update Drug Vendor Link
+        /// UI Reffered - Drug Vendor Link
+        /// </summary>
+        [HttpPost]
+        public async Task<IActionResult> AddOrUpdateDrugVendorLink(List<DO_DrugVendorLink> obj)
+        {
+            var msg = await _drugBrandRepository.AddOrUpdateDrugVendorLink(obj);
+            return Ok(msg);
+
+        }
+        #endregion Drug Vendor Link
     }
 }

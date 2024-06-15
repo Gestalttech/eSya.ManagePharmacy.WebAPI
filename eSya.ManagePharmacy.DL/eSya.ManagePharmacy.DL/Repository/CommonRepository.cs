@@ -1,12 +1,7 @@
-﻿using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using eSya.ManagePharmacy.DL.Entities;
+﻿using eSya.ManagePharmacy.DL.Entities;
 using eSya.ManagePharmacy.DO;
 using eSya.ManagePharmacy.IF;
+using Microsoft.EntityFrameworkCore;
 
 namespace eSya.ManagePharmacy.DL.Repository
 {
@@ -178,6 +173,33 @@ namespace eSya.ManagePharmacy.DL.Repository
                         }).OrderBy(o => o.ManufacturerName).ToListAsync();
 
                     return await mf;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<List<DO_DrugVendorLink>> GetVendorList(int BusinessKey)
+        {
+            try
+            {
+                using (var db = new eSyaEnterprise())
+                {
+                    var ds = db.GtEavnbls
+                        .Where(w => w.ActiveStatus && w.BusinessKey == BusinessKey)
+                        .Join(db.GtEavncds.Where(K => K.ActiveStatus),
+                    a => new { a.VendorId },
+                    b => new { b.VendorId },
+                    (a, b) => new { a, b })
+                        .Select(r => new DO_DrugVendorLink
+                        {
+                            VendorID = r.a.VendorId,
+                            VendorName = r.b.VendorName
+                        }).OrderBy(o => o.VendorName).ToListAsync();
+
+                    return await ds;
                 }
             }
             catch (Exception ex)

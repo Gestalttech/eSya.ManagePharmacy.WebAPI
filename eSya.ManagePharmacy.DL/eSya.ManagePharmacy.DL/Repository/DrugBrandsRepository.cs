@@ -525,7 +525,6 @@ namespace eSya.ManagePharmacy.DL.Repository
         #endregion Drug Brand
 
         #region Drug Manufacturer Link
-
         public async Task<List<DO_DrugManufacturerLink>> GetDrugManufacturerLink(int BusinessKey, int ManufacturerID)
         {
             try
@@ -602,8 +601,116 @@ namespace eSya.ManagePharmacy.DL.Repository
                 }
             }
         }
-
-
         #endregion Drug Manufacturer Link
+
+        #region Drug Vendor Link
+        public async Task<List<DO_DrugVendorLink>> GetDrugVendorLink(int BusinessKey, int VendorID)
+        {
+            try
+            {
+                using (var db = new eSyaEnterprise())
+                {
+                    var ds = await db.GtEphmdbs.Where(x => x.ActiveStatus)
+                        .Select(r => new DO_DrugVendorLink
+                        {
+                            BusinessKey = BusinessKey,
+                            VendorID = VendorID,
+                            TradeID = r.TradeId,
+                            TradeName = r.TradeName,
+                            MinimumSupplyQty = 0,
+                            BusinessSharePerc = 0,
+                            PartNumber = null,
+                            PartDesc = null,
+                            ActiveStatus = true,
+                        }).ToListAsync();
+
+                    foreach (var obj in ds)
+                    {
+                        GtEphdvl pf = db.GtEphdvls.Where(x => x.BusinessKey == obj.BusinessKey && x.VendorId == obj.VendorID).FirstOrDefault();
+                        if (pf != null)
+                        {
+                            obj.MinimumSupplyQty = pf.MinimumSupplyQty;
+                            obj.BusinessSharePerc = pf.BusinessSharePerc;
+                            obj.PartNumber = pf.PartNumber;
+                            obj.PartDesc = pf.PartDesc;
+                            obj.ActiveStatus = pf.ActiveStatus;
+                        }
+                        else
+                        {
+                            obj.ActiveStatus = true;
+
+                        }
+                    }
+
+                    return ds;
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
+        }
+
+        public async Task<DO_ReturnParameter> AddOrUpdateDrugVendorLink(List<DO_DrugVendorLink> obj)
+        {
+            using (var db = new eSyaEnterprise())
+            {
+                using (var dbContext = db.Database.BeginTransaction())
+                {
+                    try
+                    {
+                        foreach (var ser_br in obj)
+                        {
+                            GtEphdvl dvllink = db.GtEphdvls.Where(x => x.BusinessKey == ser_br.BusinessKey && x.TradeId == ser_br.TradeID && x.VendorId == ser_br.VendorID).FirstOrDefault();
+                            if (dvllink != null)
+                            {
+                                dvllink.MinimumSupplyQty = ser_br.MinimumSupplyQty;
+                                dvllink.BusinessSharePerc = ser_br.BusinessSharePerc;
+                                dvllink.PartNumber = ser_br.PartNumber;
+                                dvllink.PartDesc = ser_br.PartDesc;
+                                dvllink.ActiveStatus = ser_br.ActiveStatus;
+                                dvllink.ModifiedBy = ser_br.UserID;
+                                dvllink.ModifiedOn = System.DateTime.Now;
+                                dvllink.ModifiedTerminal = ser_br.TerminalID;
+                            }
+                            else
+                            {
+                                var vdl = new GtEphdvl
+                                {
+                                    BusinessKey = ser_br.BusinessKey,
+                                    TradeId = ser_br.TradeID,
+                                    VendorId = ser_br.VendorID,
+                                    MinimumSupplyQty = ser_br.MinimumSupplyQty,
+                                    BusinessSharePerc = ser_br.BusinessSharePerc,
+                                    PartNumber = ser_br.PartNumber,
+                                    PartDesc = ser_br.PartDesc,
+                                    LastPurchaseRate = 0,
+                                    ActiveStatus = ser_br.ActiveStatus,
+                                    FormId = ser_br.FormID,
+                                    CreatedBy = ser_br.UserID,
+                                    CreatedOn = System.DateTime.Now,
+                                    CreatedTerminal = ser_br.TerminalID
+                                };
+                                db.GtEphdvls.Add(vdl); 
+                            }
+                            await db.SaveChangesAsync();
+                        }
+                        dbContext.Commit();
+                        return new DO_ReturnParameter() { Status = true, StatusCode = "S0002", Message = string.Format(_localizer[name: "S0002"]) };
+                    }
+                    catch (DbUpdateException ex)
+                    {
+                        dbContext.Rollback();
+                        throw new Exception(CommonRepository.GetValidationMessageFromException(ex));
+                    }
+                    catch (Exception ex)
+                    {
+                        dbContext.Rollback();
+                        throw ex;
+                    }
+                }
+            }
+        }
+        #endregion Drug Vendor Link
     }
 }
