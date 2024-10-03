@@ -180,7 +180,7 @@ namespace eSya.ManagePharmacy.DL.Repository
                         .Where(w => w.TradeId == TradeID)
                         .Select(r => new DO_DrugBrands
                         {
-                            l_FormParameter = r.GtEphdpas.Select(p => new DO_eSyaParameter
+                            l_FormParameter =db.GtEphdpas.Where(x=>x.TradeId==TradeID).Select(p => new DO_eSyaParameter
                             {
                                 ParameterID = p.ParameterId,
                                 ParmAction = p.ParmAction,

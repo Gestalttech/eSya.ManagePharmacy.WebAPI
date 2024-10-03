@@ -17,3 +17,4 @@ D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DL\e
 D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DL\eSya.ManagePharmacy.DL\obj\Debug\net6.0\ref\eSya.ManagePharmacy.DL.dll
 D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DL\eSya.ManagePharmacy.DL\bin\Debug\net6.0\eSya.ManagePharmacy.DL.runtimeconfig.json
 D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DL\eSya.ManagePharmacy.DL\obj\Debug\net6.0\eSya.ManagePharmacy.DL.genruntimeconfig.cache
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.DL\eSya.ManagePharmacy.DL\obj\Debug\net6.0\eSya.ManagePharmacy.DL.sourcelink.json

@@ -114,6 +114,8 @@ namespace eSya.ManagePharmacy.DL.Entities
 
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
 
+                entity.Property(e => e.RejectionReason).HasMaxLength(250);
+
                 entity.Property(e => e.VendorName).HasMaxLength(75);
             });
 
@@ -179,15 +181,6 @@ namespace eSya.ManagePharmacy.DL.Entities
                 entity.Property(e => e.ModifiedTerminal).HasMaxLength(50);
 
                 entity.Property(e => e.ShortDesc).HasMaxLength(15);
-
-                entity.Property(e => e.TocurrConversion).HasColumnName("TOCurrConversion");
-
-                entity.Property(e => e.TolocalCurrency)
-                    .IsRequired()
-                    .HasColumnName("TOLocalCurrency")
-                    .HasDefaultValueSql("((1))");
-
-                entity.Property(e => e.TorealCurrency).HasColumnName("TORealCurrency");
             });
 
             modelBuilder.Entity<GtEccncd>(entity =>
@@ -562,6 +555,10 @@ namespace eSya.ManagePharmacy.DL.Entities
                     .HasColumnName("GSTPerc");
 
                 entity.Property(e => e.EffectiveFrom).HasColumnType("datetime");
+
+                entity.Property(e => e.Cessperc)
+                    .HasColumnType("numeric(5, 2)")
+                    .HasColumnName("CESSPerc");
 
                 entity.Property(e => e.CreatedOn).HasColumnType("datetime");
 

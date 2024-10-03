@@ -13,3 +13,4 @@ D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.IF\e
 D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.IF\eSya.ManagePharmacy.IF\obj\Debug\net6.0\refint\eSya.ManagePharmacy.IF.dll
 D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.IF\eSya.ManagePharmacy.IF\obj\Debug\net6.0\eSya.ManagePharmacy.IF.pdb
 D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.IF\eSya.ManagePharmacy.IF\obj\Debug\net6.0\ref\eSya.ManagePharmacy.IF.dll
+D:\Projects\eSyaProjects2022\eSya.ManagePharmacy.WebAPI\eSya.ManagePharmacy.IF\eSya.ManagePharmacy.IF\obj\Debug\net6.0\eSya.ManagePharmacy.IF.sourcelink.json
