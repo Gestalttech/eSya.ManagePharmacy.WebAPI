@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("eSya.ManagePharmacy.WebAPI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+1cbec67dc5963bb1cea3f56b3386d75fd5395158")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fa3b526a7e2fe03ebcfb095edfb0914e47d48259")]
 [assembly: System.Reflection.AssemblyProductAttribute("eSya.ManagePharmacy.WebAPI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("eSya.ManagePharmacy.WebAPI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
